@@ -25,3 +25,26 @@ Run the server:
 Bash
 uvicorn deployment.main:app --reload
 Open your browser to http://127.0.0.1:8000/docs to test the API interactively.
+
+## 🧪 Test the API
+You can test the endpoint using `curl` in your terminal. This example sends a claim that should be **DENIED** (Knee surgery for a common cold, with no authorization).
+
+```bash
+curl -X 'POST' \
+  '[http://127.0.0.1:8000/predict_denial](http://127.0.0.1:8000/predict_denial)' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "patient": {
+    "age": 45,
+    "gender": "M"
+  },
+  "clinical_data": {
+    "diagnosis_codes": ["J00"], 
+    "procedure_code": "29881"
+  },
+  "admin_data": {
+    "provider_type": "General Practice",
+    "has_prior_authorization": false
+  }
+}'
